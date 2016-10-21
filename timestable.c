@@ -5,7 +5,7 @@
 
 int transmute_char(char *subject); 
 char *transmute_int(int subject); 
-int draw(char *min, char *max); 
+void draw(char *min, char *max); 
 
 
 int main(int argc, char *argv[]) { 
@@ -86,7 +86,7 @@ int string_graft(char *patient, char *graft, int step) {
 }    
    
 
-int draw(char *min, char *max) { 
+void draw(char *min, char *max) { 
    int start = transmute_char(min); 
    int stop = transmute_char(max); 
    int tmp,placer,i = 0; 
@@ -114,8 +114,7 @@ int draw(char *min, char *max) {
       }
 
 
-   free(placement); 
-   return 0; 
+   free(placement);  
 
 }
           
