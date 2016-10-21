@@ -4,7 +4,7 @@
 
 
 int transmute_char(char *subject); 
-
+char *transmute_int(int subject); 
 
 int main(int argc, char *argv[]) { 
    char *min = "1";
@@ -23,7 +23,9 @@ int main(int argc, char *argv[]) {
        
       }
   }
+   int maxer = transmute_char(max); 
    printf("%i\n",transmute_char(max)); 
+   printf("%s\n",transmute_int(maxer));
    return 0; 
 
 }
@@ -37,3 +39,22 @@ int transmute_char(char *subject) {
    } 
    return new; 
 }  
+
+char *transmute_int(int subject) { 
+   char *new = malloc(5);
+   memset(new,0,5); 
+   int container = 0;   
+   int count = 5; 
+   while(subject) { 
+      container = subject % 10; 
+      subject /= 10; 
+      new[--count] = container + 0x30; 
+      if (count < 0)
+         break;       
+   }
+   new += count;   
+   return new; 
+}
+
+
+
