@@ -8,7 +8,7 @@ char *transmute_int(int subject);
 void draw(char *min, char *max); 
 
 
-int main(int argc, char *argv[]) { 
+int main(int argc,char *argv[]) { 
    char *min = "1";
    char *max = "10";
     if(--argc) {   
@@ -60,7 +60,7 @@ int transmute_char(char *subject) {
 char *transmute_int(int subject) { 
    int container = 0;
    int count = 5;
-   char *new = malloc(5); 
+   char *new = malloc(5);
    memset(new,0,5);  
    while(subject) { 
       container = subject % 10; 
@@ -69,13 +69,15 @@ char *transmute_int(int subject) {
       if (count < 0)
          break;       
    }
-   new += count;    
-   return new; 
+   if(count) { 
+   memcpy(new,new + count,6 - count);      
+   }
+   return new;
 }
   
 
 
-int string_graft(char *patient, char *graft, int step) {
+int string_graft(char *patient,char *graft,int step) {
    int len = strlen(graft); 
    int i = 0; 
    int index = 0; 
@@ -86,28 +88,38 @@ int string_graft(char *patient, char *graft, int step) {
 }    
    
 
-void draw(char *min, char *max) { 
+void draw(char *min,char *max) { 
    int start = transmute_char(min); 
    int stop = transmute_char(max); 
-   int tmp,placer,i = 0; 
+   int tmp,placer,i,step = 0;
+   char *intbuf;
+   char *placement;   
    int size = stop * stop;
-   int step = strlen(transmute_int(size + 1)); 
-   char *placement = malloc(size + 1); 
+   intbuf = transmute_int(size + 1);
+   step = strlen(intbuf);  
+   placement = malloc(size + 1);
+   free(intbuf);  
    memset(placement,' ',size);
    placement[size + 1] = '\0';
    placer = 0;
    placer += string_graft((placement + placer),"*",step);
    for(i = start; i <= stop; ++i) {
-      placer += string_graft((placement + placer),transmute_int(i),step);
+      intbuf = transmute_int(i);
+      placer += string_graft((placement + placer),intbuf,step);
+      free(intbuf); 
    }
    placement[placer] = '\0';
    printf("%s\n",placement);
-   for(i = start;i <= stop; ++i) {
+   for(i = start;i <= stop;++i) {
       placer = 0; 
       memset(placement,' ',size - 1);
-      placer += string_graft((placement + placer),transmute_int(i),step);
+      intbuf = transmute_int(i);
+      placer += string_graft((placement + placer),intbuf,step);
+      free(intbuf); 
       for(tmp = start; tmp <= stop; ++tmp) {
-         placer += string_graft((placement + placer),transmute_int(tmp * i),step);
+         intbuf = transmute_int(tmp * i);
+         placer += string_graft((placement + placer),intbuf,step);
+         free(intbuf); 
       } 
       placement[placer] = '\0';
       printf("%s\n",placement); 
