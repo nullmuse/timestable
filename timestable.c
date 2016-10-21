@@ -36,7 +36,10 @@ int main(int argc,char *argv[]) {
             printf("Error: range numbers zero or less\n");
             exit(1);
          }
-
+   if(transmute_char(max) > 100) { 
+      printf("Error: max range of 100 exceeded\n"); 
+      exit(1); 
+     }
 
 
    draw(min,max); 
@@ -61,15 +64,15 @@ int transmute_char(char *subject) {
 char *transmute_int(int subject) { 
    int container = 0;
    int count = 5;
+   int check = 0;
    char *new = malloc(5);
    memset(new,0,5);  
-   while(subject) { 
+   while(subject) {
       container = subject % 10; 
       subject /= 10; 
-      new[--count] = container + 0x30; 
-      if (count < 0)
-         break;       
-   }
+      new[--count] = container + 0x30;
+      check++;        
+   } 
    if(count) { 
    memcpy(new,new + count,6 - count);      
    }
@@ -98,8 +101,9 @@ void draw(char *min,char *max) {
    int size = stop * stop;
    intbuf = transmute_int(size + 1);
    step = strlen(intbuf);  
+   free(intbuf); 
    placement = malloc(size + 1);
-   free(intbuf);  
+   printf("hella\n");  
    memset(placement,' ',size);
    placement[size + 1] = '\0';
    placer = 0;
