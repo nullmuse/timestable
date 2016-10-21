@@ -103,7 +103,6 @@ void draw(char *min,char *max) {
    step = strlen(intbuf);  
    free(intbuf); 
    placement = malloc(size + 1);
-   printf("hella\n");  
    memset(placement,' ',size);
    placement[size + 1] = '\0';
    placer = 0;
