@@ -19,10 +19,11 @@ int main(int argc,char *argv[]) {
       else if(argv[2]) {
          min = argv[1]; 
          max = argv[2];
-         } 
+          
          if(transmute_char(min) > transmute_char(max)) { 
            printf("Error: max less than min\n"); 
            exit(1);    
+      }
       }
       else {
          max = argv[1];
